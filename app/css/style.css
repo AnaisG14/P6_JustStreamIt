@@ -1,0 +1,22 @@
+body {
+  background-color: teal;
+}
+
+p {
+  border: 1px dotted black;
+}
+
+.categories article {
+  display: flex;
+  flex-direction: column;
+}
+.categories article .film {
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+}
+.categories article .category-title {
+  font-size: 2em;
+}
+
+/*# sourceMappingURL=style.css.map */

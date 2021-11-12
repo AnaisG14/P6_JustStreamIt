@@ -1,0 +1,25 @@
+$color: teal;
+
+body {
+    background-color: $color;
+}
+
+p {
+    border: 1px dotted black;
+}
+
+.categories {
+    article {
+        display : flex;
+        flex-direction : column;
+        .film {
+            display : flex;
+            flex-direction : row;
+            overflow : scroll;
+        }
+        .category-title {
+            font-size: 2em;
+        }
+    }
+}
+
