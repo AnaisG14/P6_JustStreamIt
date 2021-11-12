@@ -1,39 +1,81 @@
-// Affichage des jaquettes de films grâce à une boucle
-let imageFilm = ["../app/images/reflechir.gif",
-                    "../app/images/logo.png",
-                    "../app/images/reflechir.gif",
-                    "../app/images/logo.png",
-                    "../app/images/reflechir.gif",
-                    "../app/images/logo.png",
-                    "../app/images/reflechir.gif",]
-
-let films = document.getElementsByClassName("films");
-let i = 0
-while (i<7){
-    for (let film of films) {
-        let new_film = document.createElement("img");
-        new_film.src = imageFilm[i];
-        film.appendChild(new_film);
-//        new_film.innerHTML = "<p><img src='../app/images/reflechir.gif'/></p>";
+function displayFilms (request, category, number_films) {
+    fetch(request)
+      .then(function (response) {
+        // handle success
+            return response.json();
+      })
+      .then(function (value) {
+        let i = 0;
+        if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score") {
+            i = 1;
+            number_films -= 1;
         }
-    i++;
-}
+        if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2") {
+            number_films = 3;
+        }
+         let imageFilm = [];
+         while (i < number_films) {
+            imageFilm.push(value.results[i].image_url)
+            i++
+         }
+         return imageFilm;
+         })
+      .then(function(imageFilm) {
+          let film = document.getElementsByClassName(category);
+          i = 0;
+          while (i < number_films) {
+            let new_p = document.createElement("p");
+            let new_film = document.createElement("img");
+            let image_src = imageFilm[i];
+            new_film.src = image_src;
+            new_p.appendChild(new_film)
+            film[0].appendChild(new_p);
+            i++
+         }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+};
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score", "best", 5);
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2", "best", 3);
 
-// test d'un événement click
-let evenement = document.getElementsByClassName("categories__bestratedfilm");
-evenement[0].addEventListener("click", function(){
-    let new_element = document.createElement("p");
-    evenement[0].appendChild(new_element);
-    new_element.innerHTML = "<p>test</p>";
-    evenement[0].style.border = "2px solid red";
-});
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Animation", "animation", 5);
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Animation&page=2", "animation", 2);
+
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Thriller", "thriller", 5);
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Thriller&page=2", "thriller", 2);
+
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Family", "family", 5);
+displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Family&page=2", "family", 2);
+
+
+
+
+
+//// test d'un événement click
+//let evenement = document.getElementsByClassName("categories__bestratedfilm");
+//evenement[0].addEventListener("click", function(){
+//    let new_element = document.createElement("p");
+//    evenement[0].appendChild(new_element);
+//    new_element.innerHTML = "<p>test</p>";
+//    evenement[0].style.border = "2px solid red";
+//});
 
 // lecture de l'API
+
+// Make a request for a user with a given ID
+
+
+
+
+
 //const axios = require('axios')
 //
 //function askGenres () {
 //
-//axios.get("http://localhost:8000/api/v1/genres/")
+//axios.get("http://127.0.0.1:8000/api/v1/genres/")
 //    .then(function(response) {
 //        let new_genre = document.createElement("p");
 //        let new_element = document.getElementsByTagName("footer")
@@ -48,7 +90,7 @@ evenement[0].addEventListener("click", function(){
 //        alert("fin");
 //    });
 //}
-
+//
 //askGenres()
 
 

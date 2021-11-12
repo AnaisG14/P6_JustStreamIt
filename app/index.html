@@ -8,42 +8,45 @@
     </head>
 
     <body>
-        <header>
-            <h1 class="title">JustStreamIt</h1>
-            <p><img src="../app/images/logo.png" alt="logo"/></p>
-            <nav class="nav">
+        <header class="heading">
+            <p class="heading__logo"><img src="../app/images/logo_h100.png" alt="logo"/></p>
+            <nav class="heading__nav">
                 <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="">Catégories</a></li>
+                    <li class="button"><a href="index.html">Accueil</a></li>
+                    <li class="button"><a href="">Catégories</a></li>
                 </ul>
             </nav>
         </header>
-        <footer>
-            <p>Mentions légales</p>
-            <p>Créateur</p>
-        </footer>
+
         <section class="bestfilm">
-            <p class="bestfilm__paragraphe">Le meilleur film</p>
-            <p class="bestfilm__img"><img src="../paysage.jpg" alt="paysage" title="paysage"/></p>
+            <p class="bestfilm__title">Le meilleur film</p>
+            <p class="bestfilm__img"><img src="https://m.media-amazon.com/images/M/MV5BNDEyYTA5OWEtYjNiYS00MGZlLThjYzEtMTc1Zjk2NDRmZmYxXkEyXkFqcGdeQXVyNzIwNTQyMw@@._V1_UY268_CR1,0,182,268_AL_.jpg" alt="paysage" title="paysage"/></p>
+            <p class="bestfilm__button">Button</p>
+            <p class="bestfilm__resume">Résumé du film</p>
         </section>
         <section class="categories">
-            <article class="categories__bestratedfilm">
+            <article class="categories__bestratedfilms">
                 <p class="category-title">Meilleurs films toutes catégories</p>
-                <p class="films"></p>
+                <div id="img_best_film" class="films best"></div>
             </article>
             <article class="categories__animation">
                 <p class="category-title">Animation</p>
-                <p class="films"></p>
+                <div class="films animation"></div>
             </article>
             <article class="categories__thriller">
                 <p class="category-title">Thriller</p>
-                <p class="films"></p>
+                <div class="films thriller"></div>
             </article>
             <article class="categories__family">
                 <p class="category-title">Family</p>
-                <p class="films"></p>
+                <div class="films family"></div>
             </article>
         </section>
+
+         <footer>
+            <p>Mentions légales</p>
+            <p>Créateur</p>
+        </footer>
 
         <script type="text/javascript" src="./index.js"></script>
     </body>
