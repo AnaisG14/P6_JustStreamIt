@@ -21,8 +21,8 @@ body {
   width: 240px;
   height: 40px;
   border: solid #055858;
-  margin-top: 80px;
-  margin-right: 20px;
+  margin-top: 30px;
+  margin-right: 40px;
   justify-content: flex-end;
   background-color: #055858;
   border-radius: 10px;
@@ -44,21 +44,19 @@ body {
   text-align: center;
 }
 
-.bestfilm {
-  background-color: #800000;
-}
-
 .bestFilm {
+  background-color: #800000;
   width: 95%;
   display: flex;
   flex-direction: row;
+  margin: auto;
   justify-content: space-around;
 }
 .bestFilm__informationsFilm {
   width: 60%;
 }
 .bestFilm__informationsFilm p {
-  width: 19%;
+  width: 90%;
 }
 .bestFilm__img {
   width: 30%;
