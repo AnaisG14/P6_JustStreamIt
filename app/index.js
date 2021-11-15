@@ -1,4 +1,51 @@
-function displayFilms (request, category, number_films) {
+//function displayFilms (request, category, number_films) {
+//    fetch(request)
+//      .then(function (response) {
+//        // handle success
+//            return response.json();
+//      })
+//      .then(function (value) {
+//        let i = 0;
+//        if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score") {
+//            i = 1;
+//        }
+//        if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2") {
+//            number_films = 3;
+//        }
+//         let imageFilm = [];
+//         while (i < number_films) {
+//            imageFilm.push(value.results[i].image_url)
+//            i++
+//         }
+//         console.log(category + ":" + number_films + ":" + performance.now());
+//         return imageFilm;
+//         })
+//      .then(function(imageFilm) {
+//          let film = document.getElementById(category);
+//           if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score") {
+//            i = 1;
+//            number_films -= 1;
+//        }
+//          i = 0;
+//          while (i < number_films) {
+//            let new_p = document.createElement("p");
+//            let new_film = document.createElement("img");
+//            let image_src = imageFilm[i];
+//            new_film.src = image_src;
+//            new_p.appendChild(new_film)
+//            film.appendChild(new_p);
+//            i++
+//         }
+//      })
+//      .catch(function (error) {
+//        // handle error
+//        console.log(error);
+//      })
+//};
+
+
+function displayFilms (request, category, numberPages) {
+        let number_films = 5;
     fetch(request)
       .then(function (response) {
         // handle success
@@ -8,20 +55,25 @@ function displayFilms (request, category, number_films) {
         let i = 0;
         if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score") {
             i = 1;
-            number_films -= 1;
         }
         if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2") {
-            number_films = 3;
+            number_films = 5;
         }
          let imageFilm = [];
          while (i < number_films) {
-            imageFilm.push(value.results[i].image_url)
-            i++
+            imageFilm.push(value.results[i].image_url);
+            i++;
          }
+         console.log(category + ":" + number_films + ":" + performance.now());
+         console.log(imageFilm);
          return imageFilm;
          })
       .then(function(imageFilm) {
-          let film = document.getElementsByClassName(category);
+          let film = document.getElementById(category);
+           if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score") {
+            i = 1;
+            number_films -= 1;
+        }
           i = 0;
           while (i < number_films) {
             let new_p = document.createElement("p");
@@ -29,7 +81,7 @@ function displayFilms (request, category, number_films) {
             let image_src = imageFilm[i];
             new_film.src = image_src;
             new_p.appendChild(new_film)
-            film[0].appendChild(new_p);
+            film.appendChild(new_p);
             i++
          }
       })
@@ -38,6 +90,7 @@ function displayFilms (request, category, number_films) {
         console.log(error);
       })
 };
+
 displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score", "best", 5);
 displayFilms("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2", "best", 3);
 

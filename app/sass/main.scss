@@ -17,30 +17,32 @@ body {
     height: 120px;
     display: flex;
     flex-direction : row;
-    justify-content: space-around;
-    &__nav {
-        width: 60%;
-        height: 100%;
-        border: solid;
+    justify-content: space-between;
+    .nav {
+        width: 240px;
+        height: 40px;
+        border: solid #055858;
+        margin-top: 80px;
+        margin-right: 20px;
+        justify-content: flex-end;
+        background-color:#055858;
+        border-radius: 10px;
+
         ul {
-            width: 240px;
+            list-style-type: none;
             margin: auto;
             display: flex;
             flex-direction: row;
-            margin: 2px;
-            justify-content: space-around;
-            .button {
+            .nav__link {
                 width: 100px;
-                height: 40px;
-                border : 1px solid black;
             }
         }
     }
     &__logo {
         width: 30%;
         height: 100%;
-        border: solid;
-        margin: 2px;
+        margin-top: 10px;
+        margin-left: 5px;
         text-align: center;
     }
 }
@@ -49,23 +51,44 @@ body {
     background-color: #800000;
 }
 
-.categories {
-    article {
-        .category-title {
-            font-size: 2em;
+.bestFilm {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    &__informationsFilm {
+        width: 60%;
+        p {
+            width: 19%;
         }
+    }
+    &__img {
+        width: 30%;
+    }
+}
 
-        .films {
-            display : flex;
-            flex-direction : row;
+.category {
+    &__title {
+        font-size: 2em;
+    }
+    &__carousel {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: center;
+        &_film {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
             overflow : scroll;
             p {
                 width: 200px;
             }
         }
-
-
-
     }
 }
+
+
+
 

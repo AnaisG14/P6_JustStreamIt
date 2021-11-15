@@ -15,31 +15,32 @@ body {
   height: 120px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
-.heading__nav {
-  width: 60%;
-  height: 100%;
-  border: solid;
-}
-.heading__nav ul {
+.heading .nav {
   width: 240px;
+  height: 40px;
+  border: solid #055858;
+  margin-top: 80px;
+  margin-right: 20px;
+  justify-content: flex-end;
+  background-color: #055858;
+  border-radius: 10px;
+}
+.heading .nav ul {
+  list-style-type: none;
   margin: auto;
   display: flex;
   flex-direction: row;
-  margin: 2px;
-  justify-content: space-around;
 }
-.heading__nav ul .button {
+.heading .nav ul .nav__link {
   width: 100px;
-  height: 40px;
-  border: 1px solid black;
 }
 .heading__logo {
   width: 30%;
   height: 100%;
-  border: solid;
-  margin: 2px;
+  margin-top: 10px;
+  margin-left: 5px;
   text-align: center;
 }
 
@@ -47,15 +48,39 @@ body {
   background-color: #800000;
 }
 
-.categories article .category-title {
+.bestFilm {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.bestFilm__informationsFilm {
+  width: 60%;
+}
+.bestFilm__informationsFilm p {
+  width: 19%;
+}
+.bestFilm__img {
+  width: 30%;
+}
+
+.category__title {
   font-size: 2em;
 }
-.categories article .films {
+.category__carousel {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  align-items: center;
+}
+.category__carousel_film {
+  width: 100%;
   display: flex;
   flex-direction: row;
   overflow: scroll;
 }
-.categories article .films p {
+.category__carousel_film p {
   width: 200px;
 }
 

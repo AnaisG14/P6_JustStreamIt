@@ -10,36 +10,55 @@
     <body>
         <header class="heading">
             <p class="heading__logo"><img src="../app/images/logo_h100.png" alt="logo"/></p>
-            <nav class="heading__nav">
+            <nav class="nav">
                 <ul>
-                    <li class="button"><a href="index.html">Accueil</a></li>
-                    <li class="button"><a href="">Catégories</a></li>
+                    <li class="nav__link"><a href="index.html">Accueil</a></li>
+                    <li class="nav__link"><a href="">Catégories</a></li>
                 </ul>
             </nav>
         </header>
 
-        <section class="bestfilm">
-            <p class="bestfilm__title">Le meilleur film</p>
-            <p class="bestfilm__img"><img src="https://m.media-amazon.com/images/M/MV5BNDEyYTA5OWEtYjNiYS00MGZlLThjYzEtMTc1Zjk2NDRmZmYxXkEyXkFqcGdeQXVyNzIwNTQyMw@@._V1_UY268_CR1,0,182,268_AL_.jpg" alt="paysage" title="paysage"/></p>
-            <p class="bestfilm__button">Button</p>
-            <p class="bestfilm__resume">Résumé du film</p>
+        <section class="bestFilm">
+            <div class="bestFilm__informationsFilm">
+                <p id="titleBestFilm" class="bestFilm__informationsFilm_title">Titre meilleur film</p>
+                <p class="bestFilm__informationsFilm_resume">Résumé du film</p>
+                <p class="bestFilm__informationsFilm_button">En savoir plus</p>
+            </div>
+            <p id="bestFilm__img" class="bestFilm__img"></p>
         </section>
+
         <section class="categories">
-            <article class="categories__bestratedfilms">
-                <p class="category-title">Meilleurs films toutes catégories</p>
-                <div id="img_best_film" class="films best"></div>
+            <article class="category">
+                <p class="category__title">Meilleurs films toutes catégories</p>
+                <div class="category__carousel">
+                    <p class="category__carousel_button"><img src="../app/images/button_left.png"/></p>
+                    <div id="best" class="category__carousel_film"></div>
+                    <p class="category__carousel_button"><img src="../app/images/button_right.png"/></p>
+                </div>
             </article>
-            <article class="categories__animation">
-                <p class="category-title">Animation</p>
-                <div class="films animation"></div>
+            <article class="category">
+                <p class="category__title">Animation</p>
+                <div class="category__carousel">
+                    <p class="category__carousel_button"><img src="../app/images/button_left.png"/></p>
+                    <div id="animation" class="category__carousel_film"></div>
+                    <p class="category__carousel__button"><img src="../app/images/button_right.png"/></p>
+                </div>
             </article>
-            <article class="categories__thriller">
-                <p class="category-title">Thriller</p>
-                <div class="films thriller"></div>
+            <article class="category">
+                <p class="category__title">Thriller</p>
+                <div class="category__carousel">
+                    <p class="category__carousel_button"><img src="../app/images/button_left.png"/></p>
+                    <div id="thriller"  class="category__carousel_film"></div>
+                    <p class="category__carousel_button"><img src="../app/images/button_right.png"/></p>
+                </div>
             </article>
-            <article class="categories__family">
-                <p class="category-title">Family</p>
-                <div class="films family"></div>
+            <article class="category">
+                <p class="category__title">Family</p>
+                <div class="category__carousel">
+                    <p class="category__carousel_button"><img src="../app/images/button_left.png"/></p>
+                    <div  id="family" class="category__carousel_film"></div>
+                    <p class="category__carousel_button"><img src="../app/images/button_right.png"/></p>
+                </div>
             </article>
         </section>
 
@@ -48,6 +67,6 @@
             <p>Créateur</p>
         </footer>
 
-        <script type="text/javascript" src="./index.js"></script>
+        <script type="text/javascript" src="./indexbis.js"></script>
     </body>
 </html>
