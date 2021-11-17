@@ -18,130 +18,146 @@ class Film {
     }
 };
 
-async function displayFilms (request, category, all_films, number_film_end_page) {
-    await fetch(request)
-      .then(function (response) {
-        // handle success
-           return response.json();
-      })
-      .then(function (value) {
-      // get id of films
-        let id_films = [];
-        let j = 0;
-         while (j < 5) {
-            id_films.push(value.results[j].id);
-            j++;
-         }
-         console.log(id_films);
-          for (let j in id_films) {
-            getResume(id_films[j]);
-         };
+async function getFilms(data, allFilms, numberFilms, category) {
+// récupère les informations (id, titre, url_image et les ajoute aux listes vides de chaque categorie de allFilms
+// boucle sur le nombre de film de la page
+    let i = 0
+    while (i < numberFilms) {
+    // ajoute au dictionnaire allFilms des informations
+        allFilms[category].push([data[i].id, data[i].title, data[i].image_url]);
+        i++
+    }
+    return true;
+}
 
-        // get image_url of films
+async function getData(request) {
+// récuper les datas en json
+    let response = await fetch(request);
+    if (!response.ok) {
+    throw new Error(`Erreur HTTP ! statut: ${response.status}`);
+    }
+    return await response.json();
+}
+
+
+//async createFilm => creer des instance de la classe film et les ajouter à un dictionnaire
+
+
+// creer le dictionnaire des categories : let allFilms
+const categories = ["best", "Animation", "Thriller", "Family"];
+let number_of_films_to_display = 7;
+let allFilms = {};
+let urls = [];
+let informationsFilm = []
+
+// boucle for sur categories
+for (let category of categories) {
+    // => retourne tableau ou chaque categorie a pour valeur une liste vide {'category1': [], 'category2': [], ...}
+    allFilms[category] = [];
+    // construction des url de la page1
+    if (category == "best") {
+        urls.push(["http://localhost:8000/api/v1/titles/?sort_by=-imdb_score", category]);
+    } else {
+        urls.push(["http://localhost:8000/api/v1/titles/?sort_by=-imdb_score" + "&genre=" + category, category]);
+    }
+}
+
+
+async function saveData() {
+    // Recupération des données pour chaque url
+    for (let url of urls) {
+        // boucle tant que le nombre de livres dans category < nombre de livres à traiter
+//            let i = allFilms[url[1]].length;
+            if (url[1] == "best") {
+                number_of_films_to_display ++;
+            }
+            else {
+                number_of_films_to_display = 7;
+            }
+            while (allFilms[url[1]].length < number_of_films_to_display) {
+                if (allFilms[url[1]] == 0) {
+                    urlPage = url[0];
+                } else {
+                    urlPage = nextUrl
+                }
+            // recupération des données :
+                let dataJson = await getData(urlPage);
+                nextUrl = dataJson.next;
+                data = dataJson.results;
+                //vérification du nombre de films à récupérer sur cette url
+                let numberFilm = number_of_films_to_display - allFilms[url[1]].length;
+                let numberFilmToSelect = 0;
+                if (numberFilm > data.length) {
+                    numberFilmToSelect = data.length;
+                } else {
+                    numberFilmToSelect = numberFilm;
+                }
+                // getFilms() qui ajoute les datas aux catégories vides
+                await getFilms(data, allFilms, numberFilmToSelect, url['1']);
+                }
+        }
+    }
+
+function addImages () {
+//    --- boucle sur categorie  => ajout des films depuis le dictionnaire dans les 4 catégories
+    for (category of categories) {
         let i = 0;
-        if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=1") {
-            // add image and title in best film
-            let p_image_best = document.getElementById('bestFilm__img');
-            let new_image_best = document.createElement('img');
-            new_image_best.src = value.results[0].image_url;
-            new_image_best.setAttribute("id", value.results[0].id);
-            p_image_best.appendChild(new_image_best);
-
-            document.getElementById('titleBestFilm').textContent = value.results[0].title;
-
-            // don't use first film in best_film category
+        let lengthCategory = number_of_films_to_display;
+        if (category == "best") {
             i = 1;
+            lengthCategory++
         }
-        if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&page=2") {
-            number_film_end_page += 1;
-        }
-         let imageFilm = [];
-         while (i < number_film_end_page) {
-            imageFilm.push([value.results[i].image_url, value.results[i].id]);
-            i++;
-         }
-         return imageFilm;
-         })
-      .then(function(imageFilm) {
-           if (category == "no") {
-                category = "best";
-           }
-          let film = document.getElementById(category.toLowerCase());
-           if (request == "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score") {
-            let i = 1;
-            number_film_end_page -= 1;
-        }
-          let i = 0;
-          while (i < number_film_end_page) {
+        let film = document.getElementById(category.toLowerCase());
+        while (i < 7) {
             let new_p = document.createElement("p");
             let new_film = document.createElement("img");
-            let image_src = imageFilm[i][0];
+            let image_src = allFilms[category][i][2];
             new_film.src = image_src;
-            new_film.setAttribute("id", imageFilm[i][1])
+            new_film.setAttribute("id", allFilms[category][i][0])
             new_p.appendChild(new_film)
             film.appendChild(new_p);
             i++
          }
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-};
+    }
+}
 
-function getResume (id) {
+function addBestFilm () {
+//    --- ajout des informations du film best
+    // image
+    let p_image_best = document.getElementById('bestFilm__img');
+    let new_image_best = document.createElement('img');
+    new_image_best.src = allFilms["best"][0][2];
+    new_image_best.setAttribute("id", allFilms["best"][0][0]);
+    p_image_best.appendChild(new_image_best);
+    // title
+    document.getElementById('titleBestFilm').textContent = allFilms["best"][0][1];
+    // resume
+    let id_best = parseInt(document.querySelector("#bestFilm__img > img").getAttribute("id"));
+    let item = (informationsFilm.find(item => item.id === id_best)).long_description;
+    document.getElementById("resumeBestFilm").textContent = item;
+}
+
+async function getResume (id) {
     url = "http://127.0.0.1:8000/api/v1/titles/" + id;
-    fetch(url)
-    .then(function(resp) {
-        return resp.json();
-    })
-    .then(function(resp) {
-        film = new Film ( resp.id, resp.title, resp.year, resp.duration, resp.description, resp.long_description,
+    let resp = await getData(url);
+
+    film = new Film ( resp.id, resp.title, resp.year, resp.duration, resp.description, resp.long_description,
             resp.imdb_score, resp.img_url, resp.actors, resp.directors, resp.genres, resp.countries,
             resp.rated, resp.worldwide_gross_income);
-        all_films.push(film);
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error.message);
-     })
-};
-
-let all_films = [];
-const categories = ["no", "Animation", "Thriller", "Family"];
-const number_of_films_to_display = 7;
-
-async function fetchAll (categories, numbers_of_number_of_films_to_display) {
-    const numbers_of_pages_to_display = Math.trunc(number_of_films_to_display/5)+1;
-    for (let category of categories) {
-        let number_film_end_page = 5;
-        let i = 1;
-        while (i <= numbers_of_pages_to_display) {
-            let request = "";
-            if (category == "no") {
-                request = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score" + "&page=" + i;
-                console.log(request);
-            } else {
-                request = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score" + "&genre=" + category + "&page=" + i;
-                console.log(request);
-            }
-            if (i == numbers_of_pages_to_display) {
-                number_film_end_page = number_of_films_to_display % 5;
-            }
-            await displayFilms(request, category, all_films, number_film_end_page).then(console.log("en cours: " + performance.now() + ":" + all_films.length));
-            i++;
-            }
-    }
+        informationsFilm.push(film);
 };
 
 
-fetchAll(categories, number_of_films_to_display)
-.then(function() {
-    let id_best = parseInt(document.querySelector("#bestFilm__img > img").getAttribute("id"));
-    let item = (all_films.find(item => item.id === id_best)).long_description;
-    document.getElementById("resumeBestFilm").textContent = item;
-    console.log(item);
-    console.log("fini: " + performance.now() + ":" + all_films.length);
-})
+async function displayFilmsCategory () {
+    await saveData();
+    addImages();
+    await getResume(allFilms["best"][0][0]);
+    addBestFilm();
+}
+displayFilmsCategory();
 
+
+//    --- creation du carousel
+//
+//    --- creation des modales
 
