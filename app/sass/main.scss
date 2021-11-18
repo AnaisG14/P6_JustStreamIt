@@ -1,12 +1,16 @@
-$color: #008080;
+$colorBackgroundBody: #008080;
+$colorBackgroundPage: black;
+$colorBackgroundHeader : #008080;
+$colorNav : #055858;
+$colorBackgroundBest: #800000;
 
 html {
     witdh: 100%;
-    background-color: black;
+    background-color: $colorBackgroundPage;
 }
 
 body {
-    background-color: $color;
+    background-color: $colorBackgroundBody;
     width: 80%;
     margin: auto;
     margin-top: 20px;
@@ -15,17 +19,18 @@ body {
 .heading {
     width : 100%;
     height: 120px;
+    background-color: $colorBackgroundHeader;
     display: flex;
     flex-direction : row;
     justify-content: space-between;
     .nav {
         width: 240px;
         height: 40px;
-        border: solid #055858;
+        border: solid $colorNav;
         margin-top: 30px;
         margin-right: 40px;
         justify-content: flex-end;
-        background-color:#055858;
+        background-color: $colorNav;
         border-radius: 10px;
 
         ul {
@@ -48,7 +53,7 @@ body {
 }
 
 .bestFilm {
-    background-color: #800000;
+    background-color: $colorBackgroundBest;
     width: 95%;
     display: flex;
     flex-direction: row;
@@ -62,6 +67,9 @@ body {
     }
     &__img {
         width: 30%;
+        img {
+            height: 600px;
+        }
     }
 }
 
@@ -79,9 +87,15 @@ body {
             width: 100%;
             display: flex;
             flex-direction: row;
-            overflow : scroll;
+            overflow-x : scroll;
             p {
                 width: 200px;
+            }
+                img {
+                    width: 215px;
+                    &:hover {
+                    width: 220px;
+                }
             }
         }
     }

@@ -108,33 +108,45 @@ function addImages () {
             lengthCategory++
         }
         let film = document.getElementById(category.toLowerCase());
-        while (i < 7) {
+        while (i < lengthCategory) {
             let new_p = document.createElement("p");
             let new_film = document.createElement("img");
             let image_src = allFilms[category][i][2];
             new_film.src = image_src;
-            new_film.setAttribute("id", allFilms[category][i][0])
-            new_p.appendChild(new_film)
+            new_film.setAttribute("id", allFilms[category][i][0]);
+            new_film.setAttribute("alt", allFilms[category][i][1]);
+            new_p.appendChild(new_film);
             film.appendChild(new_p);
             i++
          }
     }
 }
 
-function addBestFilm () {
+async function addBestFilm () {
 //    --- ajout des informations du film best
     // image
     let p_image_best = document.getElementById('bestFilm__img');
     let new_image_best = document.createElement('img');
     new_image_best.src = allFilms["best"][0][2];
     new_image_best.setAttribute("id", allFilms["best"][0][0]);
+    new_image_best.setAttribute("alt", allFilms["best"][0][1]);
     p_image_best.appendChild(new_image_best);
     // title
     document.getElementById('titleBestFilm').textContent = allFilms["best"][0][1];
     // resume
-    let id_best = parseInt(document.querySelector("#bestFilm__img > img").getAttribute("id"));
-    let item = (informationsFilm.find(item => item.id === id_best)).long_description;
+    let idBest = parseInt(document.querySelector("#bestFilm__img > img").getAttribute("id"));
+    let findedFilm = await searchFilm(idBest);
+    let item = findedFilm.long_description;
     document.getElementById("resumeBestFilm").textContent = item;
+}
+
+async function searchFilm (idFilm) {
+    let findedFilm = informationsFilm.find(item => item.id ===idFilm);
+    if (!findedFilm) {
+            await getResume(allFilms["best"][0][0]);
+            findedFilm = informationsFilm.find(item => item.id ===idFilm);
+        }
+    return findedFilm;
 }
 
 async function getResume (id) {
@@ -151,13 +163,17 @@ async function getResume (id) {
 async function displayFilmsCategory () {
     await saveData();
     addImages();
-    await getResume(allFilms["best"][0][0]);
     addBestFilm();
 }
 displayFilmsCategory();
 
 
 //    --- creation du carousel
-//
+
+
+
+
+
+
 //    --- creation des modales
 
