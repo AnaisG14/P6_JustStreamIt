@@ -49,6 +49,13 @@ let number_of_films_to_display = 7;
 let allFilms = {};
 let urls = [];
 let informationsFilm = []
+let categoriesTitle = document.getElementsByClassName('category__title');
+let i = 1;
+while (i < categories.length) {
+    categoriesTitle[i].textContent = categories[i];
+    i ++;
+}
+
 
 // boucle for sur categories
 for (let category of categories) {
@@ -165,10 +172,217 @@ async function displayFilmsCategory () {
     addImages();
     addBestFilm();
 }
-displayFilmsCategory();
 
 
 //    --- creation du carousel
+// create a class carousel whith options (element and options in a table)
+class Carousel {
+    /**
+    * @param {HTMLElement} element
+    * @param {Object} options
+    * @param {Object} [options.slidesToScroll=1] Nombre d'éléments à faire défiler
+    * @parma {Object} [options.slidesVisible=1] Nombre d'éléments visibles dans un slide
+    * @parma {boolean} [options.loop=false] doit-on boucler en fin de slide
+    */
+    constructor (element, options = {}) {
+        this.element = element
+        // Object.assign permet de fusionner avec l'objet passé en paramètres
+        // Le premier paramètre créer le tableau d'options vide, le 2ème y met des options par défaut
+        // et le 3ème met les options passées en paramètre
+        this.options = Object.assign({}, {
+            slidesToScroll: 1,
+            slidesVisible: 1,
+            loop: false
+        }, options)
+        let children = [].slice.call(element.children) //fige le nombre d'élements au départ avant la création du nouvel enfant
+        this.isMobile = false
+        this.currentItem = 0
+        this.moveCallBacks = []
+
+        // Modification du DOM
+        this.root = this.createDivWithClass('carousel')
+        this.container = this.createDivWithClass('carousel__container')
+        this.root.setAttribute("tabindex", "0")
+        this.root.appendChild(this.container)
+        this.element.appendChild(this.root)
+        this.items = children.map ((child) => {
+            let item = this.createDivWithClass('carousel__item')
+            item.appendChild(child)
+            this.container.appendChild(item)
+            return item
+        })
+        this.setStyle()
+        this.createNavigation()
+
+        // Evènements
+        this.moveCallBacks.forEach(cb => cb(0))
+        this.onWindowResize()
+        window.addEventListener('resize', this.onWindowResize.bind(this))
+        this.root.addEventListener('keyup', e => {
+            if (e.key === "ArrowRight" || e.key === "Right") {
+                this.next()
+            } else if (e.key === "ArrowLeft" || e.key === "Left") {
+                this.prev()
+            }
+        })
+    }
+
+    /**
+    * Applique les bonnes dimensions aux éléments du carousel
+    */
+    setStyle () {
+         let ratio = this.items.length / this.slidesVisible
+         this.container.style.width = (ratio * 100) + "%"
+         this.items.forEach(item => item.style.width = ((100 / this.slidesVisible) / ratio) + "%")
+    }
+
+    createNavigation () {
+        let nextButton = this.createDivWithClass("carousel__next")
+        let prevButton = this.createDivWithClass("carousel__prev")
+        this.root.appendChild(nextButton)
+        this.root.appendChild(prevButton)
+        nextButton.addEventListener("click", this.next.bind(this))
+        prevButton.addEventListener("click", this.prev.bind(this))
+        if (this.options.loop === true) {
+            return
+        }
+        this.onMove(index => {
+            if (index === 0) {
+                prevButton.classList.add("carousel__prev--hidden")
+            } else {
+                prevButton.classList.remove("carousel__prev--hidden")
+            }
+            if (this.items[this.currentItem + this.slidesVisible] === undefined) {
+                nextButton.classList.add("carousel__next--hidden")
+            } else {
+                nextButton.classList.remove("carousel__next--hidden")
+            }
+        })
+    }
+
+    next () {
+        this.goToItem(this.currentItem + this.slidesToScroll)
+    }
+
+    prev () {
+        this.goToItem(this.currentItem - this.slidesToScroll)
+    }
+
+    /**
+    * Déplace le carousel vers les éléments ciblés
+    * @param {number} index
+    */
+    goToItem (index) {
+        if (index < 0) {
+            if (this.options.loop) {
+                index = this.items.length - this.slidesVisible
+            } else {
+                return
+            }
+        } else if (index >= this.items.length || (this.items[this.currentItem + this.slidesVisible] === undefined && index > this.currentItem)) {
+            if (this.options.loop) {
+                index = 0
+            } else {
+                return
+            }
+        }
+        let translateX = index * -100 / this.items.length
+        this.container.style.transform = 'translate3d(' + translateX + '%, 0, 0)'
+        this.currentItem = index
+        this.moveCallBacks.forEach(cb => cb(index))
+
+    }
+
+    onMove (cb) {
+        this.moveCallBacks.push(cb)
+    }
+
+    onWindowResize () {
+        let mobile = window.innerWidth < 800
+        if (mobile !== this.isMobile) {
+            this.isMobile = mobile
+            this.setStyle()
+        }
+        this.moveCallBacks.forEach(cb => cb(this.currentItem))
+    }
+
+    /**
+    *
+    * @param (strig) className
+    * @returns {HTMLElement}
+    */
+    createDivWithClass (className) {
+        let div = document.createElement("div")
+        div.setAttribute("class", className)
+        return div
+    }
+
+    /**
+    * @returns {numbers}
+    */
+    get slidesToScroll () {
+        return this.isMobile ? 1 : this.options.slidesToScroll
+    }
+
+    /**
+    * @returns {numbers}
+    */
+    get slidesVisible () {
+        return this.isMobile ? 1 : this.options.slidesVisible
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+    await displayFilmsCategory();
+    new Carousel(document.querySelector("#best"), {
+        slidesToScroll: 1,
+        slidesVisible: 5,
+        loop: false
+    })
+    new Carousel(document.querySelector("#animation"), {
+        slidesToScroll: 1,
+        slidesVisible: 5,
+        loop: false
+    })
+    new Carousel(document.querySelector("#thriller"), {
+        slidesToScroll: 1,
+        slidesVisible: 5,
+        loop: false
+    })
+    new Carousel(document.querySelector("#family"), {
+        slidesToScroll: 1,
+        slidesVisible: 5,
+        loop: false
+    })
+})
+
+
+
+
+//
+//function getTotalItemsWidth(items) {
+//    // la fonction getBoundingClientRect() retourne un objet
+//    // DOMRect fournissant des informations sur la taille d'un élément
+//    // et sa position relative par rapport à la zone d'affichage
+//    // Les propriétés left, top, right, bottom, x, y, width, et height
+//
+//    const { left } = items[0].getBoundingClientRect();
+//    const { right } = items[items.length - 1].getBoundingClientRect();
+//    return right - left; // width total des items
+//}
+//
+//function carousel (container) {
+//    const slider = container.querySelector(".slider");
+//    const items = slider.querySelectorAll(".item");
+//    // Measuring the carousel
+//    const sliderVisibleWidth = slider.offsetWidth;
+//    const totalItemsWidth = getTotalItemsWidth(items);
+//    // know the maximum distance our carousel should allow to scrow
+//    const maxXOffset = 0;
+//    const minXoffset = - (totalItemsWidth - sliderVisibleWidth);
+//}
+//
+//carousel(document.querySelector(".container"));
 
 
 

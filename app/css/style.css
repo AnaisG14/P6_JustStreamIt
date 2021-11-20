@@ -18,24 +18,22 @@ body {
   flex-direction: row;
   justify-content: space-between;
 }
-.heading .nav {
-  width: 240px;
-  height: 40px;
-  border: solid #055858;
-  margin-top: 30px;
-  margin-right: 40px;
-  justify-content: flex-end;
-  background-color: #055858;
-  border-radius: 10px;
-}
 .heading .nav ul {
   list-style-type: none;
-  margin: auto;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: row;
 }
 .heading .nav ul .nav__link {
-  width: 100px;
+  float: left;
+}
+.heading .nav ul .nav__link a {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  background-color: #dddddd;
 }
 .heading__logo {
   width: 30%;
@@ -47,17 +45,45 @@ body {
 
 .bestFilm {
   background-color: #800000;
-  width: 95%;
+  width: 90%;
   display: flex;
   flex-direction: row;
   margin: auto;
   justify-content: space-around;
+  border: 4mm ridge rgba(128, 0, 0, 0.6);
 }
 .bestFilm__informationsFilm {
   width: 60%;
 }
-.bestFilm__informationsFilm p {
-  width: 90%;
+.bestFilm__informationsFilm_title {
+  padding: 25px;
+  margin: 0;
+  height: 15%;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 4em;
+  font-weight: bold;
+}
+.bestFilm__informationsFilm_resume {
+  height: 55%;
+  margin: 0;
+  padding-left: 50px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 2em;
+}
+.bestFilm__informationsFilm_button {
+  height: 10%;
+  width: 20%;
+  margin: 0;
+  float: right;
+  background-color: #ede0e0;
+  color: #800000;
+  border: 2mm ridge rgba(128, 0, 0, 0.6);
+  border-radius: 5%;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5em;
+  padding-top: 2%;
 }
 .bestFilm__img {
   width: 30%;
@@ -66,8 +92,15 @@ body {
   height: 600px;
 }
 
+.category {
+  width: 100%;
+}
 .category__title {
+  width: 80%;
   font-size: 2em;
+  margin: auto;
+  padding-top: 20px;
+  text-align: center;
 }
 .category__carousel {
   width: 95%;
@@ -77,10 +110,11 @@ body {
   align-items: center;
 }
 .category__carousel_film {
-  width: 100%;
+  width: 80%;
+  margin: auto;
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: hidden;
 }
 .category__carousel_film p {
   width: 200px;
@@ -90,6 +124,45 @@ body {
 }
 .category__carousel_film img:hover {
   width: 220px;
+}
+
+/** Carousel */
+.carousel {
+  position: relative;
+}
+.carousel__container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.carousel__item {
+  float: left;
+}
+
+.carousel__next, .carousel__prev {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: #FFF url(../../app/images/button_right.png) center center no-repeat;
+  background-size: 50px 50px;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: -50px;
+  right: -20px;
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.carousel__next:hover, .carousel__prev:hover {
+  transform: scale(1.2);
+}
+.carousel__next--hidden, .carousel__prev--hidden {
+  opacity: 0;
+}
+
+.carousel__prev {
+  background-image: url(../../app/images/button_left.png);
+  right: auto;
+  left: -20px;
 }
 
 /*# sourceMappingURL=style.css.map */
