@@ -1,11 +1,15 @@
-$colorBackgroundBody: #008080;
-$colorBackgroundPage: black;
-$colorBackgroundHeader : #008080;
-$colorNav : #055858;
-$colorBackgroundBest: #800000;
+@import "./utils/variables";
+@import "./utils/_mediaQueries";
+@import "./layouts/header";
+@import "./layouts/footer";
+@import "./pages/modal";
+@import "./pages/bestFilm";
+@import "./pages/carousel";
+
+
 
 html {
-    witdh: 100%;
+    width: 100%;
     background-color: $colorBackgroundPage;
 }
 
@@ -14,92 +18,10 @@ body {
     width: 80%;
     margin: auto;
     margin-top: 20px;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
-.heading {
-    width : 100%;
-    height: 120px;
-    background-color: $colorBackgroundHeader;
-    display: flex;
-    flex-direction : row;
-    justify-content: space-between;
-    .nav {
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: row;
-            .nav__link {
-                float: left;
-                a {
-                    display: block;
-                    text-align: center;
-                    padding: 14px 16px;
-                    text-decoration: none;
-                    background-color: #dddddd;
-                }
-            }
-        }
-    }
-    &__logo {
-        width: 30%;
-        height: 100%;
-        margin-top: 10px;
-        margin-left: 5px;
-        text-align: center;
-    }
-}
 
-.bestFilm {
-    background-color: $colorBackgroundBest;
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    margin: auto;
-    justify-content: space-around;
-    border: 4mm ridge rgba(128, 00, 0, .6);
-    &__informationsFilm {
-        width: 60%;
-        &_title {
-            padding: 25px;
-            margin: 0;
-            height: 15%;
-            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-            font-size: 4em;
-            font-weight: bold;
-        }
-        &_resume {
-            height: 55%;
-            margin: 0;
-            padding-left: 50px;
-            font-family: Helvetica, Arial, sans-serif;
-            font-size: 2em;
-        }
-        &_button {
-            height: 10%;
-            width: 20%;
-            margin: 0;
-            float: right;
-            background-color: #ede0e0;
-            color: $colorBackgroundBest;
-            border: 2mm ridge rgba(128, 00, 0, .6);
-            border-radius: 5%;
-            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.5em;
-            padding-top: 2%;
-
-        }
-    }
-    &__img {
-        width: 30%;
-        img {
-            height: 600px;
-        }
-    }
-}
 
 .category {
     width: 100%;
@@ -128,56 +50,18 @@ body {
                 img {
                     width: 215px;
                     &:hover {
-                    width: 220px;
+                    z-index: 10;
+                        width: 250px;
+                    &:focus {
+                        width: 250px;
+                    }
                 }
             }
         }
     }
 }
 
-footer {
-    display: flex;
-}
-
-/** Carousel */
-
-.carousel {
-    position: relative;
-    &__container::after {
-        content: '';
-        clear: both;
-        display: table;
-    }
-    &__item {
-        float: left;
-    }
-}
-
-.carousel__next, .carousel__prev {
-    position: absolute;
-    width: 70px;
-    height : 70px;
-    background: #FFF url(../../app/images/button_right.png) center center no-repeat;
-    background-size: 50px 50px;
-    border-radius: 50%;
-    top: 50%;
-    margin-top: -50px;
-    right: -20px;
-    cursor: pointer;
-    transition: transform 0.3s, opacity 0.3s;
-    &:hover {
-        transform: scale(1.2)
-    }
-    &--hidden {
-        opacity: 0;
-    }
-}
 
 
-.carousel__prev {
-    background-image: url(../../app/images/button_left.png);
-    right: auto;
-    left: -20px
-}
 
 

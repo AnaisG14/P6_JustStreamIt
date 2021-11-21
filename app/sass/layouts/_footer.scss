@@ -1,0 +1,9 @@
+footer {
+    display: flex;
+    background-color: $colorBackgroundHeader;
+    width: 100%;
+    justify-content: space-around;
+    p {
+        width: 20%;
+    }
+}

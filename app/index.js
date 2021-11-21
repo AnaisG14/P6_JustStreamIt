@@ -1,6 +1,6 @@
 class Film {
     constructor(id, title, year, duration, description, long_description, imdb_score,
-            img_url, actors, directors, genres, countries, rated, worldwide_gross_income) {
+            image_url, actors, directors, genres, countries, rated, worldwide_gross_income) {
     this.id = id;
     this.title = title;
     this.year = year;
@@ -8,7 +8,7 @@ class Film {
     this.description = description;
     this.long_description = long_description;
     this.imdb_score = imdb_score;
-    this.img_url = img_url;
+    this.image_url = image_url;
     this.actors = actors;
     this.directors = directors;
     this.genres = genres;
@@ -121,6 +121,7 @@ function addImages () {
             let image_src = allFilms[category][i][2];
             new_film.src = image_src;
             new_film.setAttribute("id", allFilms[category][i][0]);
+            new_film.setAttribute("tabindex", "0")
             new_film.setAttribute("alt", allFilms[category][i][1]);
             new_p.appendChild(new_film);
             film.appendChild(new_p);
@@ -148,20 +149,20 @@ async function addBestFilm () {
 }
 
 async function searchFilm (idFilm) {
-    let findedFilm = informationsFilm.find(item => item.id ===idFilm);
+    let findedFilm = informationsFilm.find(item => item.id === idFilm);
     if (!findedFilm) {
-            await getResume(allFilms["best"][0][0]);
-            findedFilm = informationsFilm.find(item => item.id ===idFilm);
+            await saveInformationsFilm(idFilm);
+            findedFilm = informationsFilm.find(item => item.id === idFilm);
         }
     return findedFilm;
 }
 
-async function getResume (id) {
+async function saveInformationsFilm (id) {
     url = "http://127.0.0.1:8000/api/v1/titles/" + id;
     let resp = await getData(url);
 
     film = new Film ( resp.id, resp.title, resp.year, resp.duration, resp.description, resp.long_description,
-            resp.imdb_score, resp.img_url, resp.actors, resp.directors, resp.genres, resp.countries,
+            resp.imdb_score, resp.image_url, resp.actors, resp.directors, resp.genres, resp.countries,
             resp.rated, resp.worldwide_gross_income);
         informationsFilm.push(film);
 };
@@ -353,40 +354,86 @@ document.addEventListener("DOMContentLoaded", async function () {
         slidesVisible: 5,
         loop: false
     })
-})
 
-
-
-
-//
-//function getTotalItemsWidth(items) {
-//    // la fonction getBoundingClientRect() retourne un objet
-//    // DOMRect fournissant des informations sur la taille d'un élément
-//    // et sa position relative par rapport à la zone d'affichage
-//    // Les propriétés left, top, right, bottom, x, y, width, et height
-//
-//    const { left } = items[0].getBoundingClientRect();
-//    const { right } = items[items.length - 1].getBoundingClientRect();
-//    return right - left; // width total des items
-//}
-//
-//function carousel (container) {
-//    const slider = container.querySelector(".slider");
-//    const items = slider.querySelectorAll(".item");
-//    // Measuring the carousel
-//    const sliderVisibleWidth = slider.offsetWidth;
-//    const totalItemsWidth = getTotalItemsWidth(items);
-//    // know the maximum distance our carousel should allow to scrow
-//    const maxXOffset = 0;
-//    const minXoffset = - (totalItemsWidth - sliderVisibleWidth);
-//}
-//
-//carousel(document.querySelector(".container"));
-
-
-
-
+    // listen for modal
+    let images = document.getElementById("categories").getElementsByTagName("img");
+    for (image of images) {
+        image.addEventListener("click", function (e) {
+            const imageClique = e.target;  // recupération de l'objet cliqué
+            displayModal(parseInt(imageClique.getAttribute("id")))
+        });
+    }
+    for (image of images) {
+        image.addEventListener("keyup", function (e) {
+            if (e.key === "Enter") {
+                const imageClique = e.target;  // recupération de l'objet cliqué
+                displayModal(parseInt(imageClique.getAttribute("id")));
+            } else {
+                return;
+            }
+        });
+    }
+    document.getElementById("bestFilmButton").addEventListener("click", function() {
+        displayModal(allFilms["best"][0][0]);
+    })
+    closeModal();
+});
 
 
 //    --- creation des modales
 
+async function displayModal (idFilm) {
+    let findedFilm = await searchFilm(idFilm);
+    // put element in DOM
+    modifyElementInDom("modal__content_title", findedFilm.title + "(" + findedFilm.year + ")"); //title
+    createElementInDom("modal__content_mainInformations", "p", "year"); //year
+    modifyElementInDom ("year", "|" + findedFilm.genres + "|" + findedFilm.countries + "(" + findedFilm.year + ")");
+    createElementInDom("modal__content_mainInformations", "p", "directors"); // directors
+    modifyElementInDom ("directors", "Réalisé par " + findedFilm.directors);
+    createElementInDom("modal__content_actors", "p", "actors");
+    modifyElementInDom ("actors", "Acteurs: " + findedFilm.actors);
+
+    createElementInDom("modal__content_scores", "p", "duration");
+    modifyElementInDom ("duration", "Durée(min) " + findedFilm.duration);
+    createElementInDom("modal__content_scores", "p", "rated");
+    modifyElementInDom ("rated", "Rated: " + findedFilm.rated);
+    createElementInDom("modal__content_scores", "p", "imdb");
+    modifyElementInDom ("imdb", "Score Imdb: " + findedFilm.imdb_score);
+    createElementInDom("modal__content_scores", "p", "worldwide_gross_income");
+    modifyElementInDom ("worldwide_gross_income", "BoxOffice: " + findedFilm.worldwide_gross_income);
+
+    createElementInDom("modal__content_resume", "p", "description");
+    modifyElementInDom ("description", findedFilm.long_description);
+
+    createElementInDom("modal__header_img", "img", "imageModal");
+    document.getElementById("imageModal").src = findedFilm.image_url;
+
+    document.getElementById("modalFilm").style.display = "block";
+    document.getElementById("closeModal").focus();
+
+}
+function createElementInDom (idParent, element, idElement) {
+    const parent = document.getElementById (idParent);
+    const newElement = document.createElement(element);
+    newElement.setAttribute("id", idElement);
+    parent.appendChild(newElement);
+}
+
+function modifyElementInDom (element, modification) {
+    let id = document.getElementById(element);
+    id.textContent = modification;
+}
+
+function closeModal () {
+    document.getElementById("closeModal").addEventListener("click", () => {
+        document.getElementById("modalFilm").style.display = "none";
+    })
+    document.getElementById("closeModal").addEventListener("keyup", (e) => {
+        if (e.key === "Enter") {
+            document.getElementById("modalFilm").style.display = "none";
+        } else {
+            return
+        }
+
+    })
+}

@@ -1,0 +1,41 @@
+/** Carousel */
+
+.carousel {
+    position: relative;
+    &__container {
+        overflow-x : hidden;
+    }
+    &__item {
+        float: left;
+        img:focus {
+            width: 250px;
+        }
+    }
+}
+
+.carousel__next, .carousel__prev {
+    position: absolute;
+    width: 70px;
+    height : 70px;
+    background: #FFF url(../../app/images/button_right.png) center center no-repeat;
+    background-size: 50px 50px;
+    border-radius: 50%;
+    top: 50%;
+    margin-top: -50px;
+    right: -20px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s;
+    &:hover {
+        transform: scale(1.2)
+    }
+    &--hidden {
+        opacity: 0;
+    }
+}
+
+
+.carousel__prev {
+    background-image: url(../../app/images/button_left.png);
+    right: auto;
+    left: -20px
+}

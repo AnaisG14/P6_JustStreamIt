@@ -1,0 +1,76 @@
+.bestFilm {
+    background-color: $colorBackgroundBest;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    margin: 5% auto;
+    justify-content: space-around;
+    border: 4mm ridge rgba(29, 208, 208, .6);
+    color: $colorBestFilm;
+    @include mobile-only {
+        margin: 0 auto;
+    }
+    &__informationsFilm {
+        width: 60%;
+        @include mobile-only {
+            width: 50%;
+        }
+        &_title {
+            padding: 25px;
+            margin: 0;
+            height: 15%;
+            font-size: 4em;
+            font-weight: bold;
+            @include mobile-only {
+                font-size: 1.5em;
+                padding: 5px;
+            }
+        }
+        &_resume {
+            height: 55%;
+            margin: 0;
+            padding-left: 50px;
+            font-size: 2em;
+            @include mobile-only {
+                font-size: 0.8em;
+                padding: 1%;
+                margin: auto;
+            }
+        }
+        &_button {
+            height: 10%;
+            width: 20%;
+            margin: 0;
+            float: right;
+            background-color: $colorBackgroundButton;
+            color: $colorBackgroundBest;
+            border: 2mm ridge rgba(29, 208, 208, .6);
+            border-radius: 5%;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.5em;
+            padding-top: 2%;
+            @include mobile-only {
+                font-size: 0.8em;
+                padding-top: 5%;
+                width: 90%;
+                margin: auto;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+            &:focus {
+                border : solid 2px red;
+            }
+        }
+    }
+    &__img {
+        width: 30%;
+        @include mobile-only {
+            width: 40%;
+        }
+        img {
+            max-width: 100%;
+        }
+    }
+}

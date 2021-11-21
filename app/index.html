@@ -22,12 +22,12 @@
             <div class="bestFilm__informationsFilm">
                 <p id="titleBestFilm" class="bestFilm__informationsFilm_title">Titre meilleur film</p>
                 <p id="resumeBestFilm" class="bestFilm__informationsFilm_resume">Résumé du film</p>
-                <p class="bestFilm__informationsFilm_button">En savoir plus</p>
+                <p id="bestFilmButton" tabindex="0" class="bestFilm__informationsFilm_button">En savoir plus</p>
             </div>
             <p id="bestFilm__img" class="bestFilm__img"></p>
         </section>
 
-        <section class="categories">
+        <section id="categories" class="categories">
             <article class="category">
                 <h2 class="category__title">Meilleurs films toutes catégories</h2>
                 <div class="category__carousel">
@@ -58,6 +58,26 @@
             <p>Mentions légales</p>
             <p>Créateur: Anais Gatard</p>
         </footer>
+
+        <div id="modalFilm" class="modal">
+            <div class="modal__header">
+                <span tabindex="0" id="closeModal">&times;</span>
+                <div class="modal__header_img" id="modal__header_img"></div>
+            </div>
+            <div class="modal__content">
+                <div class="modal__content_informations">
+                     <h1 class="modal__content_title" id="modal__content_title">Title</h1>
+                     <div class="modal__content_mainInformations" id="modal__content_mainInformations"></div>
+                     <div class="modal__content_actors" id="modal__content_actors"></div>
+                     <div class="modal__content_resume" id="modal__content_resume">
+                        <h3>Résumé du film</h3>
+                     </div>
+                 </div>
+                <div class="modal__content_scores" id="modal__content_scores">
+
+                </div>
+            </div>
+        </div>
 
         <script type="text/javascript" src="./index.js"></script>
     </body>
