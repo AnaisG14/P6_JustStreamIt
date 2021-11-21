@@ -126,6 +126,10 @@ body {
   width: 220px;
 }
 
+footer {
+  display: flex;
+}
+
 /** Carousel */
 .carousel {
   position: relative;

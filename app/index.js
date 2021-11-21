@@ -174,8 +174,7 @@ async function displayFilmsCategory () {
 }
 
 
-//    --- creation du carousel
-// create a class carousel whith options (element and options in a table)
+//    --- creation du carousel with options (element and options in a table)
 class Carousel {
     /**
     * @param {HTMLElement} element
