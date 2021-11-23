@@ -3,21 +3,22 @@
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     display: none;
     position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
+    left: 20%;
+    top: 7%;
+    width: 60%;
+    height: 80%;
     z-index: 1;
     overflow: auto;
     padding: 20px;
     background-color: $colorBackgroundModal;
+    border: 6mm double darken($colorBackgroundHeader, 10%);
     &__header {
         width: 80%;
         margin: auto;
         background-color: $colorBackgroundBody;
     }
     &__content {
-        width: 80%;
+        width: 90%;
         margin: auto;
         display: flex;
         flex-direction: row;
@@ -30,9 +31,9 @@
         }
         &_scores {
             width: 30%;
+            margin: 5% auto;
             color: $colorModalScores;
             text-align: center;
-            align-items: center;
             font-size : 2em;
             @include mobile-only {
                 font-size: 1em;

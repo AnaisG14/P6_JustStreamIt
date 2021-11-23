@@ -39,7 +39,7 @@
         }
         &_button {
             height: 10%;
-            width: 20%;
+            width: 30%;
             margin: 0;
             float: right;
             background-color: $colorBackgroundButton;
@@ -71,6 +71,9 @@
         }
         img {
             max-width: 100%;
+        }
+        @include mobile-only {
+            width: 40%;
         }
     }
 }

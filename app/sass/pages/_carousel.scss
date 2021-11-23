@@ -4,6 +4,9 @@
     position: relative;
     &__container {
         overflow-x : hidden;
+        content: '';
+        clear: both;
+        display: table;
     }
     &__item {
         float: left;

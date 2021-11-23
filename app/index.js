@@ -394,7 +394,7 @@ async function displayModal (idFilm) {
     modifyElementInDom ("actors", "Acteurs: " + findedFilm.actors);
 
     createElementInDom("modal__content_scores", "p", "duration");
-    modifyElementInDom ("duration", "Durée(min) " + findedFilm.duration);
+    modifyElementInDom ("duration", "Durée(min): " + findedFilm.duration);
     createElementInDom("modal__content_scores", "p", "rated");
     modifyElementInDom ("rated", "Rated: " + findedFilm.rated);
     createElementInDom("modal__content_scores", "p", "imdb");
