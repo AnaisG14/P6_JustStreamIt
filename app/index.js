@@ -43,9 +43,9 @@ class Carousel {
     * represent a Carousel
     * @param {HTMLElement} element
     * @param {Object} options
-    * @param {Object} [options.slidesToScroll=1] Nombre d'éléments à faire défiler
-    * @parma {Object} [options.slidesVisible=1] Nombre d'éléments visibles dans un slide
-    * @parma {boolean} [options.loop=false] doit-on boucler en fin de slide
+    * @param {Object} [options.slidesToScroll=1] Number of elements to scroll
+    * @parma {Object} [options.slidesVisible=1] Number of elements visible in a slide
+    * @parma {boolean} [options.loop=false] should we make a loop at the end of the slide
     */
     constructor (element, options = {}) {
         this.element = element
@@ -106,8 +106,8 @@ class Carousel {
     createNavigation () {
         let nextButton = this.createDivWithClass("carousel__next")
         let prevButton = this.createDivWithClass("carousel__prev")
-        this.root.appendChild(nextButton)
-        this.root.appendChild(prevButton)
+        this.root.parentNode.appendChild(nextButton)
+        this.root.parentNode.appendChild(prevButton)
         nextButton.addEventListener("click", this.next.bind(this))
         prevButton.addEventListener("click", this.prev.bind(this))
         if (this.options.loop === true) {
@@ -136,7 +136,7 @@ class Carousel {
     }
 
     /**
-    * Déplace le carousel vers les éléments ciblés
+    * Moves the carousel to the targeted elements
     * @param {number} index
     */
     goToItem (index) {
@@ -434,7 +434,7 @@ function closeModal () {
 // ==================================== main program =================================================
 
 // creating all necessary variables for the script
-const categories = ["best", "Animation", "Thriller", "Family"];
+const categories = ["best", "Adventure", "Thriller", "Family"];
 let number_of_films_to_display = 7;
 let allFilms = {};
 let urls = [];
@@ -467,7 +467,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         slidesVisible: 5,
         loop: false
     })
-    new Carousel(document.querySelector("#animation"), {
+    new Carousel(document.querySelector("#adventure"), {
         slidesToScroll: 1,
         slidesVisible: 5,
         loop: false

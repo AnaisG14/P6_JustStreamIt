@@ -2,30 +2,34 @@
 
 .carousel {
     position: relative;
+    overflow: hidden;
     &__container {
         overflow-x : hidden;
-        content: '';
-        clear: both;
-        display: table;
+        &::after {
+            content: '';
+            clear: both;
+            display: table;
+        }
     }
     &__item {
+        position: relative;
         float: left;
-        img:focus {
-            width: 250px;
+        img {
+            width: 95%;
+            margin: auto;
+            &:focus, &:hover {
+                transform: scale(1.2);
+            }
         }
     }
 }
 
 .carousel__next, .carousel__prev {
-    position: absolute;
     width: 70px;
     height : 70px;
     background: #FFF url(../../app/images/button_right.png) center center no-repeat;
     background-size: 50px 50px;
     border-radius: 50%;
-    top: 50%;
-    margin-top: -50px;
-    right: -20px;
     cursor: pointer;
     transition: transform 0.3s, opacity 0.3s;
     &:hover {
@@ -39,6 +43,5 @@
 
 .carousel__prev {
     background-image: url(../../app/images/button_left.png);
-    right: auto;
-    left: -20px
+    margin: 5px;
 }

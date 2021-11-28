@@ -206,30 +206,34 @@ footer p {
 /** Carousel */
 .carousel {
   position: relative;
+  overflow: hidden;
 }
 .carousel__container {
   overflow-x: hidden;
+}
+.carousel__container::after {
   content: "";
   clear: both;
   display: table;
 }
 .carousel__item {
+  position: relative;
   float: left;
 }
-.carousel__item img:focus {
-  width: 250px;
+.carousel__item img {
+  width: 95%;
+  margin: auto;
+}
+.carousel__item img:focus, .carousel__item img:hover {
+  transform: scale(1.2);
 }
 
 .carousel__next, .carousel__prev {
-  position: absolute;
   width: 70px;
   height: 70px;
   background: #FFF url(../../app/images/button_right.png) center center no-repeat;
   background-size: 50px 50px;
   border-radius: 50%;
-  top: 50%;
-  margin-top: -50px;
-  right: -20px;
   cursor: pointer;
   transition: transform 0.3s, opacity 0.3s;
 }
@@ -242,8 +246,7 @@ footer p {
 
 .carousel__prev {
   background-image: url(../../app/images/button_left.png);
-  right: auto;
-  left: -20px;
+  margin: 5px;
 }
 
 html {
@@ -274,31 +277,20 @@ body {
   text-align: center;
 }
 .category__carousel {
-  width: 95%;
+  width: 80%;
   display: flex;
   flex-direction: row;
   margin: auto;
   align-items: center;
 }
-.category__carousel_film {
-  width: 80%;
-  margin: auto;
-  display: flex;
-  flex-direction: row;
-  overflow-x: hidden;
+.category__carousel :nth-child(1) {
+  order: 2;
 }
-.category__carousel_film p {
-  width: 200px;
+.category__carousel :nth-child(2) {
+  order: 3;
 }
-.category__carousel_film img {
-  width: 215px;
-}
-.category__carousel_film img:hover {
-  z-index: 10;
-  width: 250px;
-}
-.category__carousel_film img:hover:focus {
-  width: 250px;
+.category__carousel :nth-child(3) {
+  order: 1;
 }
 
 /*# sourceMappingURL=style.css.map */
